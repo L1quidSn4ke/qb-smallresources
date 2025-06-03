@@ -41,12 +41,12 @@ end)
 CreateThread(function()
     while true do
         Wait(10000)
-        local ped = PlayerPedId()
+        local playerPed = PlayerPedId()
         if isLoggedIn == true or Config.AFK.kickInCharMenu == true then
             if checkUser then
-                local currPos = GetEntityCoords(ped, true)
+                local currentPos = GetEntityCoords(playerPed, true)
                 if prevPos then
-                    if currPos == prevPos then
+                    if currentPos == prevPos then
                         if time then
                             if time > 0 then
                                 local _type = timeMinutes[tostring(time)]
@@ -66,7 +66,7 @@ CreateThread(function()
                         time = Config.AFK.secondsUntilKick
                     end
                 end
-                prevPos = currPos
+                prevPos = currentPos
             end
         end
     end
