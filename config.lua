@@ -23,6 +23,8 @@ Config.HandsUp = {
 }-- left mouse, right mouse, G, G, D, A, D, W, S, F, R, Q, left mouse, spacebar, T, R, Q
 
 Config.Binoculars = {
+    fov_min = 5,
+    fov_max = 70,
     zoomSpeed = 10.0,        -- camera zoom speed
     storeBinocularsKey = 177 -- backspace by default
 }
