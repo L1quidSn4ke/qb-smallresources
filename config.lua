@@ -157,13 +157,18 @@ Config.BlacklistedScenarios = {
         'WORLD_VEHICLE_AMBULANCE',
         'WORLD_VEHICLE_POLICE_NEXT_TO_CAR',
         'WORLD_VEHICLE_POLICE_CAR',
-        'WORLD_VEHICLE_POLICE_BIKE'
+        'WORLD_VEHICLE_POLICE_BIKE',
+        'WORLD_VEHICLE_FIRE_TRUCK',
+        'WORLD_VEHICLE_HELI_LIFEGUARD',
     },
     groups = {
         2017590552,
         2141866469,
         1409640232,
-        `ng_planes`
+        `ng_planes`,
+        'GRAPESEED_PLANES',
+        'Grapeseed_Planes',
+        'SANDY_PLANES',
     }
 }
 
