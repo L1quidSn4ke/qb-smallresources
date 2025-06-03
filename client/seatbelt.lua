@@ -30,7 +30,7 @@ local function ejectFromVehicle()
     local ejectSpeed = math.ceil(GetEntitySpeed(ped) * 8)
     if GetEntityHealth(ped) - ejectSpeed > 0 then
         SetEntityHealth(ped, GetEntityHealth(ped) - ejectSpeed)
-    elseif GetEntityHealth(ped) ~= 0 then
+    elseif GetEntityHealth(ped) < 0 then
         SetEntityHealth(ped, 0)
     end
 end
@@ -39,6 +39,7 @@ local function toggleSeatbelt()
     seatbeltOn = not seatbeltOn
     SeatBeltLoop()
     TriggerEvent("seatbelt:client:ToggleSeatbelt", seatbeltOn)
+    TriggerEvent('hud:client:ToggleShowSeatbelt',  showSeatbelt)
     TriggerServerEvent("InteractSound_SV:PlayWithinDistance", 5.0, seatbeltOn and "carbuckle" or "carunbuckle", 0.25)
 end
 
@@ -65,6 +66,7 @@ function SeatBeltLoop()
                 seatbeltOn = false
                 harnessOn = false
                 TriggerEvent("seatbelt:client:ToggleSeatbelt", seatbeltOn)
+                TriggerEvent("hud:client:ToggleShowSeatbelt",  showSeatbelt)
                 break
             end
             if not seatbeltOn and not harnessOn then break end
@@ -82,14 +84,6 @@ local function hasHarness()
 end
 
 exports("HasHarness", hasHarness)
-
----Checks whether the player has their seatbelt on or not
----@return boolean
-local function hasSeatbeltOn()
-    return seatbeltOn
-end
-
-exports("HasSeatbeltOn", hasSeatbeltOn)
 
 -- Ejection Logic
 

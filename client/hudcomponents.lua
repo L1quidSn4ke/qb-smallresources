@@ -1,8 +1,9 @@
 local disableHudComponents = Config.Disable.hudComponents
 local disableControls = Config.Disable.controls
 local displayAmmo = Config.Disable.displayAmmo
+local ignoreWeapons = Config.Disable.ignoreWeapons
 
-local function decorSet(Type, Value)
+local function DecorSet(Type, Value)
     if Type == 'parked' then
         Config.Density.parked = Value
     elseif Type == 'vehicle' then
@@ -16,11 +17,26 @@ local function decorSet(Type, Value)
     end
 end
 
-exports('DecorSet', decorSet)
+exports('DecorSet', DecorSet)
 
 CreateThread(function()
     while true do
+        if PlayerPedId() ~= lastped then
+            lastped = PlayerPedId()
+            SetPedCanLosePropsOnDamage(PlayerPedId(), false, 0)
+        end
+        Wait(100)
+    end
+end)
 
+CreateThread(function()
+    while true do
+        -- Crosshair
+        if not ignoreWeapons[GetSelectedPedWeapon(PlayerPedId())] then
+            HideHudComponentThisFrame(14)
+        end
+
+        -- Hud Components
         for i = 1, #disableHudComponents do
             HideHudComponentThisFrame(disableHudComponents[i])
         end
@@ -31,11 +47,12 @@ CreateThread(function()
 
         DisplayAmmoThisFrame(displayAmmo)
 
+        -- Density
         SetParkedVehicleDensityMultiplierThisFrame(Config.Density.parked)
         SetVehicleDensityMultiplierThisFrame(Config.Density.vehicle)
         SetRandomVehicleDensityMultiplierThisFrame(Config.Density.multiplier)
         SetPedDensityMultiplierThisFrame(Config.Density.peds)
-        SetScenarioPedDensityMultiplierThisFrame(Config.Density.scenario, Config.Density.scenario) -- Walking NPC Density
+        SetScenarioPedDensityMultiplierThisFrame(Config.Density.scenario, Config.Density.scenario)-- Walking NPC Density
         Wait(0)
     end
 end)
@@ -43,10 +60,10 @@ end)
 exports('addDisableHudComponents', function(hudComponents)
     local hudComponentsType = type(hudComponents)
     if hudComponentsType == 'number' then
-        disableHudComponents[#disableHudComponents + 1] = hudComponents
+        disableHudComponents[#disableHudComponents+1] = hudComponents
     elseif hudComponentsType == 'table' and table.type(hudComponents) == "array" then
         for i = 1, #hudComponents do
-            disableHudComponents[#disableHudComponents + 1] = hudComponents[i]
+            disableHudComponents[#disableHudComponents+1] = hudComponents[i]
         end
     end
 end)
@@ -76,10 +93,10 @@ exports('getDisableHudComponents', function() return disableHudComponents end)
 exports('addDisableControls', function(controls)
     local controlsType = type(controls)
     if controlsType == 'number' then
-        disableControls[#disableControls + 1] = controls
+        disableControls[#disableControls+1] = controls
     elseif controlsType == 'table' and table.type(controls) == "array" then
         for i = 1, #controls do
-            disableControls[#disableControls + 1] = controls[i]
+            disableControls[#disableControls+1] = controls[i]
         end
     end
 end)

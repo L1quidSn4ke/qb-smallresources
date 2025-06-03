@@ -1,25 +1,29 @@
 local QBCore = exports['qb-core']:GetCoreObject()
+local conf = Config.Discord;
 
 CreateThread(function()
-    while Config.Discord.isEnabled do
-        SetDiscordAppId(Config.Discord.applicationId)
-        SetDiscordRichPresenceAsset(Config.Discord.iconLarge)
-        SetDiscordRichPresenceAssetText(Config.Discord.iconLargeHoverText)
-        SetDiscordRichPresenceAssetSmall(Config.Discord.iconSmall)
-        SetDiscordRichPresenceAssetSmallText(Config.Discord.iconSmallHoverText)
+    while conf.IsEnabled do
+        SetDiscordAppId(conf.ApplicationId)
+        SetDiscordRichPresenceAsset(conf.IconLarge)
+        SetDiscordRichPresenceAssetText(conf.IconLargeHoverText)
+        SetDiscordRichPresenceAssetSmall(conf.IconSmall)
+        SetDiscordRichPresenceAssetSmallText(conf.IconSmallHoverText)
 
-        if Config.Discord.showPlayerCount then
+        if conf.ShowPlayerCount then
             QBCore.Functions.TriggerCallback('smallresources:server:GetCurrentPlayers', function(result)
-                SetRichPresence('Players: ' .. result .. '/' .. Config.Discord.maxPlayers)
+                SetRichPresence('Players: ' .. result .. '/' .. conf.MaxPlayers)
             end)
         end
 
-        if Config.Discord.buttons and type(Config.Discord.buttons) == "table" then
-            for i, v in pairs(Config.Discord.buttons) do
-                SetDiscordRichPresenceAction(i - 1, v.text, v.url)
+        if conf.Buttons and type(conf.Buttons) == "table" then
+            for i,v in pairs(conf.Buttons) do
+                SetDiscordRichPresenceAction(i - 1,
+                    v.text,
+                    v.url
+                )
             end
         end
 
-        Wait(Config.Discord.updateRate)
+        Wait(conf.UpdateRate)
     end
 end)
