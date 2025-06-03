@@ -20,7 +20,7 @@ Config.HandsUp = {
     command = 'hu',
     keybind = 'X',
     controls = { 24, 25, 47, 58, 59, 63, 64, 71, 72, 75, 140, 141, 142, 143, 257, 263, 264 }
-}
+}-- left mouse, right mouse, G, G, D, A, D, W, S, F, R, Q, left mouse, spacebar, T, R, Q
 
 Config.Binoculars = {
     zoomSpeed = 10.0,        -- camera zoom speed
